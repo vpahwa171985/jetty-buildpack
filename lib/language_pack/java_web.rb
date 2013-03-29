@@ -8,7 +8,8 @@ module LanguagePack
     include LanguagePack::PackageFetcher
     include LanguagePack::DatabaseHelpers
 
-    TOMCAT_PACKAGE =  "apache-tomcat-7.0.37.tar.gz".freeze
+    JETTY_VERSION = "9.0.0.v20130308".freeze
+    JETTY_PACKAGE =  "jetty-distribution-#{JETTY_VERSION}.tar.gz".freeze
     WEBAPP_DIR = "webapps/ROOT/".freeze
 
     def self.use?
@@ -22,10 +23,10 @@ module LanguagePack
     def compile
       Dir.chdir(build_path) do
         install_java
-        install_tomcat
-        remove_tomcat_files
-        copy_webapp_to_tomcat
-        move_tomcat_to_root
+        install_jetty
+        remove_jetty_files
+        copy_webapp_to_jetty
+        move_jetty_to_root
         install_database_drivers
         #install_insight
         copy_resources
@@ -33,62 +34,62 @@ module LanguagePack
       end
     end
 
-    def install_tomcat
-      FileUtils.mkdir_p tomcat_dir
-      tomcat_tarball="#{tomcat_dir}/tomcat.tar.gz"
+    def install_jetty
+      FileUtils.mkdir_p jetty_dir
+      jetty_tarball="#{jetty_dir}/jetty-distribution-#{JETTY_VERSION}.tar.gz"
 
-      download_tomcat tomcat_tarball
+      download_jetty jetty_tarball
 
-      puts "Unpacking Tomcat to #{tomcat_dir}"
-      run_with_err_output("tar xzf #{tomcat_tarball} -C #{tomcat_dir} && mv #{tomcat_dir}/apache-tomcat*/* #{tomcat_dir} && " +
-              "rm -rf #{tomcat_dir}/apache-tomcat*")
-      FileUtils.rm_rf tomcat_tarball
-      unless File.exists?("#{tomcat_dir}/bin/catalina.sh")
-        puts "Unable to retrieve Tomcat"
+      puts "Unpacking Jetty to #{jetty_dir}"
+      run_with_err_output("tar xzf #{jetty_tarball} -C #{jetty_dir} && mv #{jetty_dir}/jetty-distribution*/* #{jetty_dir} && " +
+              "rm -rf #{jetty_dir}/jetty-distribution*")
+      FileUtils.rm_rf jetty_tarball
+      unless File.exists?("#{jetty_dir}/bin/jetty.sh")
+        puts "Unable to retrieve Jetty"
         exit 1
       end
     end
 
-    def download_tomcat(tomcat_tarball)
-      puts "Downloading Tomcat: #{TOMCAT_PACKAGE}"
-      fetch_package TOMCAT_PACKAGE, "http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.37/bin/"
-      FileUtils.mv TOMCAT_PACKAGE, tomcat_tarball
+    def download_jetty(jetty_tarball)
+      puts "Downloading Jetty: #{JETTY_PACKAGE}"
+      fetch_package JETTY_PACKAGE, "http://repo2.maven.org/maven2/org/eclipse/jetty/jetty-distribution/#{JETTY_VERSION}/"
+      FileUtils.mv JETTY_PACKAGE, jetty_tarball
     end
 
-    def remove_tomcat_files
-      %w[NOTICE RELEASE-NOTES RUNNING.txt LICENSE temp/. webapps/. work/. logs].each do |file|
-        FileUtils.rm_rf("#{tomcat_dir}/#{file}")
-      end
+    def remove_jetty_files
+# TODO
+#      %w[NOTICE RELEASE-NOTES RUNNING.txt LICENSE temp/. webapps/. work/. logs].each do |file|
+#        FileUtils.rm_rf("#{jetty_dir}/#{file}")
+#      end
     end
 
-    def tomcat_dir
-      ".tomcat"
+    def jetty_dir
+      ".jetty"
     end
 
-    def copy_webapp_to_tomcat
-      run_with_err_output("mkdir -p #{tomcat_dir}/webapps/ROOT && mv * #{tomcat_dir}/webapps/ROOT")
+    def copy_webapp_to_jetty
+      run_with_err_output("mkdir -p #{jetty_dir}/webapps/ROOT && mv * #{jetty_dir}/webapps/ROOT")
     end
 
-    def move_tomcat_to_root
-      run_with_err_output("mv #{tomcat_dir}/* . && rm -rf #{tomcat_dir}")
+    def move_jetty_to_root
+      run_with_err_output("mv #{jetty_dir}/* . && rm -rf #{jetty_dir}")
     end
 
     def copy_resources
-      # Configure server.xml with variable HTTP port
-      run_with_err_output("cp -r #{File.expand_path('../../../resources/tomcat', __FILE__)}/* #{build_path}")
+      # copy jetty configuration updates into place
+      run_with_err_output("cp -r #{File.expand_path('../../../resources/jetty', __FILE__)}/* #{build_path}")
     end
 
     def java_opts
       # TODO proxy settings?
-      # Don't override Tomcat's temp dir setting
-      opts = super.merge({ "-Dhttp.port=" => "$VCAP_APP_PORT" })
+      opts = super.merge({ "-Djetty.port=" => "$VCAP_APP_PORT" })
       opts.delete("-Djava.io.tmpdir=")
       opts
     end
 
     def default_process_types
       {
-        "web" => "./bin/catalina.sh run"
+        "web" => "./bin/jetty.sh run"
       }
     end
 

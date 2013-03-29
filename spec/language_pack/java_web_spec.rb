@@ -16,7 +16,7 @@ describe LanguagePack::JavaWeb, type: :with_temp_dir do
       Dir.chdir(appdir) do
         Dir.mkdir("WEB-INF")
         java_web_pack.stub(:fetch_package) do |package|
-          FileUtils.copy( File.expand_path("../../support/fake-tomcat.tar.gz", __FILE__), package)
+          FileUtils.copy( File.expand_path("../../support/fake-jetty.tar.gz", __FILE__), package)
         end
         java_web_pack.stub(:install_database_drivers)
       end
@@ -32,7 +32,7 @@ describe LanguagePack::JavaWeb, type: :with_temp_dir do
       end
     end
 
-    it "should be used if web.xml is present in installed Tomcat dir" do
+    it "should be used if web.xml is present in installed Jetty dir" do
       Dir.chdir(appdir) do
         FileUtils.mkdir_p("webapps/ROOT/WEB-INF")
         FileUtils.touch "webapps/ROOT/WEB-INF/web.xml"
@@ -53,7 +53,7 @@ describe LanguagePack::JavaWeb, type: :with_temp_dir do
       FileUtils.touch "#{appdir}/WEB-INF/web.xml"
     end
 
-    it "should download and unpack Tomcat to root directory" do
+    it "should download and unpack Jetty to root directory" do
       java_web_pack.compile
       File.exists?(File.join(appdir, "bin", "catalina.sh")).should == true
     end
@@ -76,7 +76,7 @@ describe LanguagePack::JavaWeb, type: :with_temp_dir do
       File.exists?(web_xml).should == true
     end
 
-    it "should copy MySQL and Postgres drivers to Tomcat lib dir" do
+    it "should copy MySQL and Postgres drivers to Jetty lib dir" do
       java_web_pack.unstub(:install_database_drivers)
       java_web_pack.compile
       File.exists?(File.join(appdir,"lib","mysql-connector-java-5.1.12.jar")).should == true
@@ -93,31 +93,31 @@ describe LanguagePack::JavaWeb, type: :with_temp_dir do
     end
 
     it "should create a .profile.d with proxy sys props, connector port, and heap size in JAVA_OPTS" do
-      java_web_pack.stub(:install_tomcat)
+      java_web_pack.stub(:install_jetty)
       java_web_pack.compile
       profiled = File.join(appdir,".profile.d","java.sh")
       File.exists?(profiled).should == true
       script = File.read(profiled)
       script.should include("-Xmx$MEMORY_LIMIT")
       script.should include("-Xms$MEMORY_LIMIT")
-      script.should include("-Dhttp.port=$VCAP_APP_PORT")
+      script.should include("-Djetty.port=$VCAP_APP_PORT")
       script.should_not include("-Djava.io.tmpdir=$TMPDIR")
     end
 
-    it "should add template server.xml to Tomcat for configuration of web port" do
-      java_web_pack.compile
-      server_xml = File.join(appdir,"conf","server.xml")
-      File.exists?(server_xml).should == true
-      File.read(server_xml).should include("http.port")
-    end
+#    it "should add template server.xml to Jetty for configuration of web port" do
+#      java_web_pack.compile
+#      server_xml = File.join(appdir,"conf","server.xml")
+#      File.exists?(server_xml).should == true
+#      File.read(server_xml).should include("http.port")
+#    end
   end
 
   describe "release" do
-    it "should return the Tomcat start script as default web process" do
+    it "should return the Jetty start script as default web process" do
       java_web_pack.release.should == {
           "addons" => [],
           "config_vars" => {},
-          "default_process_types" => { "web" => "./bin/catalina.sh run" }
+          "default_process_types" => { "web" => "./bin/jetty.sh run" }
       }.to_yaml
     end
   end
