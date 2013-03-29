@@ -4,7 +4,7 @@ require "fileutils"
 
 # TODO logging
 module LanguagePack
-  class JavaWeb < Java
+  class JettyWeb < Java
     include LanguagePack::PackageFetcher
     include LanguagePack::DatabaseHelpers
 
