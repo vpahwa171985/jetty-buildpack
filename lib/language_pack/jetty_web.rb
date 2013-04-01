@@ -1,5 +1,4 @@
 require "language_pack/java"
-require "language_pack/database_helpers"
 require "fileutils"
 
 # TODO logging
