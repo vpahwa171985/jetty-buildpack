@@ -5,7 +5,6 @@ require "fileutils"
 module LanguagePack
   class JettyWeb < Java
     include LanguagePack::PackageFetcher
-    include LanguagePack::DatabaseHelpers
 
     JETTY_VERSION = "9.0.0.v20130308".freeze
     JETTY_PACKAGE =  "jetty-distribution-#{JETTY_VERSION}.tar.gz".freeze
@@ -26,7 +25,7 @@ module LanguagePack
         remove_jetty_files
         copy_webapp_to_jetty
         move_jetty_to_root
-        install_database_drivers
+        #install_database_drivers
         #install_insight
         copy_resources
         setup_profiled
