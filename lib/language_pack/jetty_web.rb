@@ -6,7 +6,8 @@ module LanguagePack
   class JettyWeb < Java
     include LanguagePack::PackageFetcher
 
-    JETTY_VERSION = "9.0.0.v20130308".freeze
+#    JETTY_VERSION = "9.0.0.v20130308".freeze
+    JETTY_VERSION = "9.0.1-20130325.073836-11".freeze
     JETTY_PACKAGE =  "jetty-distribution-#{JETTY_VERSION}.tar.gz".freeze
     WEBAPP_DIR = "webapps/ROOT/".freeze
 
@@ -50,7 +51,8 @@ module LanguagePack
 
     def download_jetty(jetty_tarball)
       puts "Downloading Jetty: #{JETTY_PACKAGE}"
-      fetch_package JETTY_PACKAGE, "http://repo2.maven.org/maven2/org/eclipse/jetty/jetty-distribution/#{JETTY_VERSION}/"
+      fetch_package JETTY_PACKAGE, "https://oss.sonatype.org/content/groups/jetty-with-staging/org/eclipse/jetty/jetty-distribution/9.0.1-SNAPSHOT/"
+      #fetch_package JETTY_PACKAGE, "http://repo2.maven.org/maven2/org/eclipse/jetty/jetty-distribution/#{JETTY_VERSION}/"
       FileUtils.mv JETTY_PACKAGE, jetty_tarball
     end
 
