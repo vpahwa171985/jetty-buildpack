@@ -55,10 +55,9 @@ module LanguagePack
     end
 
     def remove_jetty_files
-# TODO
-#      %w[NOTICE RELEASE-NOTES RUNNING.txt LICENSE temp/. webapps/. work/. logs].each do |file|
-#        FileUtils.rm_rf("#{jetty_dir}/#{file}")
-#      end
+      %w[notice.html VERSION.txt README.txt LICENSE license-eplv10-aslv20.html webapps/.].each do |file|
+        FileUtils.rm_rf("#{jetty_dir}/#{file}")
+      end
     end
 
     def jetty_dir
