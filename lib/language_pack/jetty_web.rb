@@ -76,7 +76,6 @@ module LanguagePack
     def copy_resources
       # copy jetty configuration updates into place
       run_with_err_output("cp -r #{File.expand_path('../../../resources/jetty', __FILE__)}/* #{build_path}")
-      run_with_err_output("echo jetty.port=$VCAP_APP_PORT >> #{jetty_dir}/start.ini")
     end
 
     def java_opts
