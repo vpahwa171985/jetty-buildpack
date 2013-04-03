@@ -89,7 +89,7 @@ module LanguagePack
 
     def default_process_types
       {
-        "web" => "./bin/jetty.sh start"
+        "web" => "java -jar start.jar"
       }
     end
 
