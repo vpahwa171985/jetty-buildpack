@@ -117,7 +117,7 @@ describe LanguagePack::JettyWeb, type: :with_temp_dir do
       jetty_web_pack.release.should == {
           "addons" => [],
           "config_vars" => {},
-          "default_process_types" => { "web" => "./bin/jetty.sh run" }
+          "default_process_types" => { "web" => "./bin/jetty.sh start" }
       }.to_yaml
     end
   end

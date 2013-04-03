@@ -55,7 +55,7 @@ module LanguagePack
     end
 
     def remove_jetty_files
-      %w[notice.html VERSION.txt README.txt LICENSE license-eplv10-aslv20.html webapps/.].each do |file|
+      %w[notice.html VERSION.txt README.txt LICENSE license-eplv10-aslv20.html webapps/. start.d/test-webapp.ini].each do |file|
         puts "Removing: #{jetty_dir}/#{file}"
         FileUtils.rm_rf("#{jetty_dir}/#{file}")
       end
