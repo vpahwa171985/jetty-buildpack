@@ -5,7 +5,7 @@ module LanguagePack
   class Java
     include LanguagePack::PackageFetcher
 
-    DEFAULT_JDK_VERSION = "1.6".freeze
+    DEFAULT_JDK_VERSION = "1.7".freeze
     JDK_PKG_1_6 = "openjdk6-u25-heroku-temaki.tar.gz".freeze
     JDK_PKG_1_7="openjdk7-u7-heroku-temaki-b30.tar.gz".freeze
     JDK_PKG_1_8="openjdk8-lambda-preview.tar.gz".freeze
