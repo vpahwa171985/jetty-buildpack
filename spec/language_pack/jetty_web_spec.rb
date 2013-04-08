@@ -64,9 +64,6 @@ describe LanguagePack::JettyWeb, type: :with_temp_dir do
       Dir.chdir(File.join(appdir, "webapps")) do
         Dir.glob("*").should == ["ROOT"]
       end
-      Dir.chdir(File.join(appdir, "temp")) do
-        Dir.glob("*").empty?.should == true
-      end
     end
 
     it "should copy app to webapp ROOT" do
