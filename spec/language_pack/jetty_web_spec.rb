@@ -60,13 +60,13 @@ describe LanguagePack::JettyWeb, type: :with_temp_dir do
 
     it "should remove specified Jetty files" do
       jetty_web_pack.compile
-#      File.exists?(File.join(appdir, "LICENSE")).should == false
-#      Dir.chdir(File.join(appdir, "webapps")) do
-#        Dir.glob("*").should == ["ROOT"]
-#      end
- #     Dir.chdir(File.join(appdir, "temp")) do
- #       Dir.glob("*").empty?.should == true
- #     end
+      File.exists?(File.join(appdir, "start.d/test-webapp.ini")).should == false
+      Dir.chdir(File.join(appdir, "webapps")) do
+        Dir.glob("*").should == ["ROOT"]
+      end
+      Dir.chdir(File.join(appdir, "temp")) do
+        Dir.glob("*").empty?.should == true
+      end
     end
 
     it "should copy app to webapp ROOT" do
@@ -75,41 +75,6 @@ describe LanguagePack::JettyWeb, type: :with_temp_dir do
       web_xml = File.join(appdir,"webapps","ROOT", "WEB-INF", "web.xml")
       File.exists?(web_xml).should == true
     end
-
-#    it "should copy MySQL and Postgres drivers to Jetty lib dir" do
-#      jetty_web_pack.unstub(:install_database_drivers)
-#      jetty_web_pack.compile
-#      File.exists?(File.join(appdir,"lib","mysql-connector-java-5.1.12.jar")).should == true
-#      File.exists?(File.join(appdir,"lib","postgresql-9.0-801.jdbc4.jar")).should == true
-#    end
-
-
-#    it "should unpack and configure Insight agent if Insight Rabbit service bound" do#
-#
-#    end
-
-#    it "should not unpack and configure Insight agent if Insight Rabbit service not bound" do
-#
-#    end
-
-    it "should create a .profile.d with proxy sys props, connector port, and heap size in JAVA_OPTS" do
-      jetty_web_pack.stub(:install_jetty)
-      jetty_web_pack.compile
-      profiled = File.join(appdir,".profile.d","java.sh")
-      File.exists?(profiled).should == true
-      script = File.read(profiled)
-      script.should include("-Xmx$MEMORY_LIMIT")
-      script.should include("-Xms$MEMORY_LIMIT")
-      script.should include("-Djetty.port=$VCAP_APP_PORT")
-      script.should_not include("-Djava.io.tmpdir=$TMPDIR")
-    end
-
-#    it "should add template server.xml to Jetty for configuration of web port" do
-#      jetty_web_pack.compile
-#      server_xml = File.join(appdir,"conf","server.xml")
-#      File.exists?(server_xml).should == true
-#      File.read(server_xml).should include("http.port")
-#    end
   end
 
   describe "release" do
@@ -117,7 +82,7 @@ describe LanguagePack::JettyWeb, type: :with_temp_dir do
       jetty_web_pack.release.should == {
           "addons" => [],
           "config_vars" => {},
-          "default_process_types" => { "web" => "./bin/jetty.sh start" }
+          "default_process_types" => { "web" => "./bin/jetty.sh run" }
       }.to_yaml
     end
   end

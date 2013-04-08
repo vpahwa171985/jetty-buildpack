@@ -7,7 +7,9 @@ module LanguagePack
     include LanguagePack::PackageFetcher
 
 #    JETTY_VERSION = "9.0.0.v20130308".freeze
-    JETTY_VERSION = "9.0.1-20130325.073836-11".freeze
+    JETTY_VERSION = "9.0.1.v20130408".freeze
+#    JETTY_DOWNLOAD = "http://repo2.maven.org/maven2/org/eclipse/jetty/jetty-distribution/#{JETTY_VERSION}/"
+    JETTY_DOWNLOAD = "https://oss.sonatype.org/content/repositories/jetty-547/org/eclipse/jetty/jetty-distribution/#{JETTY_VERSION}/".freeze
     JETTY_PACKAGE =  "jetty-distribution-#{JETTY_VERSION}.tar.gz".freeze
     WEBAPP_DIR = "webapps/ROOT/".freeze
 
@@ -26,8 +28,6 @@ module LanguagePack
         remove_jetty_files
         copy_webapp_to_jetty
         move_jetty_to_root
-        #install_database_drivers
-        #install_insight
         copy_resources
         setup_profiled
       end
@@ -35,7 +35,7 @@ module LanguagePack
 
     def install_jetty
       FileUtils.mkdir_p jetty_dir
-      jetty_tarball="#{jetty_dir}/jetty-distribution-#{JETTY_VERSION}.tar.gz"
+      jetty_tarball="#{jetty_dir}/#{JETTY_PACKAGE}"
 
       download_jetty jetty_tarball
 
@@ -51,14 +51,13 @@ module LanguagePack
 
     def download_jetty(jetty_tarball)
       puts "Downloading Jetty: #{JETTY_PACKAGE}"
-      fetch_package JETTY_PACKAGE, "https://oss.sonatype.org/content/groups/jetty-with-staging/org/eclipse/jetty/jetty-distribution/9.0.1-SNAPSHOT/"
-      #fetch_package JETTY_PACKAGE, "http://repo2.maven.org/maven2/org/eclipse/jetty/jetty-distribution/#{JETTY_VERSION}/"
+      fetch_package JETTY_PACKAGE, JETTY_DOWNLOAD
       FileUtils.mv JETTY_PACKAGE, jetty_tarball
     end
 
     def remove_jetty_files
-      %w[notice.html VERSION.txt README.txt LICENSE license-eplv10-aslv20.html webapps/. start.d/test-webapp.ini].each do |file|
-        puts "Removing: #{jetty_dir}/#{file}"
+      %w[webapps/. start.d/test-webapp.ini].each do |file|
+        #puts "Removing: #{jetty_dir}/#{file}"
         FileUtils.rm_rf("#{jetty_dir}/#{file}")
       end
     end
@@ -81,7 +80,6 @@ module LanguagePack
     end
 
     def java_opts
-      # TODO proxy settings?
       opts = super.merge({ "-Djetty.port=" => "$VCAP_APP_PORT" })
       opts.delete("-Djava.io.tmpdir=")
       opts
