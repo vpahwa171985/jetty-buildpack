@@ -1,14 +1,19 @@
 jetty-buildpack
 ===========================
 
-Buildpack plugin for Jetty.
+CloudFoundry V2 Buildpack plugin for Jetty 9.
 
 [![Build Status](https://travis-ci.org/jmcc0nn3ll/jetty-buildpack.png)](https://travis-ci.org/jmcc0nn3ll/jetty-buildpack)
 
-> Note:
+NOTE:
+----------------
+
 > This buildpack was created with the V2 cloudfoundry mechanism and on an alpha release of CFM (micro) at that.  Take
 > this with a grain of salt and be prepared for required changes should significant changes end up being flushed out
 > before that goes live.
+
+Description
+----------------
 
 This buildpack is quite simple to use.  It is currently hard coded to a specific Jetty version of 9.0.1.v20130408 and to
 change that the apparent approach is to simply fork this buildpack and tweak that directly.  To do this simply fork it 
@@ -26,4 +31,15 @@ root fork for customized jetty buildpack, or just a simple example of how to do 
 Feel free to submit feedback via normal github channels and I'll accept pull requests on this should they come.  
 
 For the being I'll leave this buildpack under my personal github account and should there be interest expressed I am 
-more then happy to push it over to https://github.com/jetty-project down the road.
+more then happy to push it over to https://github.com/jetty-project down the road for proper contributions, etc.
+
+Acknowledgements
+----------------
+
+The Jetty buildpack was forked from the CloudFoundry Java buildpack.  I looked at the Virgo Buildpack that Glyn worked
+on as a sanity check.
+
+* http://github.com/cloudfoundry/cloudfoundry-buildpack-java
+* http://github.com/glyn/virgo-buildpack
+
+CloudFoundry buildpacks were modelled on Heroku buildpacks.
