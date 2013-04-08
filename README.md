@@ -39,6 +39,7 @@ TODO
 - [ ] validate on non-alpha CFM setup once released
 - [ ] Look into pulling jetty.sh changes into jetty proper to remove extra file under resources
 - [ ] perhaps expose jetty.port from VCAP_APP_PORT to jetty.sh differently
+- [ ] services were not supported in the alpha build so exposing them to jetty is left as an exercise of the buildpack forker/user
 
 Acknowledgements
 ----------------
