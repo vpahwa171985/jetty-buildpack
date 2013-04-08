@@ -33,6 +33,13 @@ Feel free to submit feedback via normal github channels and I'll accept pull req
 For the being I'll leave this buildpack under my personal github account and should there be interest expressed I am 
 more then happy to push it over to https://github.com/jetty-project down the road for proper contributions, etc.
 
+TODO
+----------------
+
+- [ ] validate on non-alpha CFM setup once released
+- [ ] Look into pulling jetty.sh changes into jetty proper to remove extra file under resources
+- [ ] perhaps expose jetty.port from VCAP_APP_PORT to jetty.sh differently
+
 Acknowledgements
 ----------------
 
