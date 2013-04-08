@@ -36,6 +36,7 @@ more then happy to push it over to https://github.com/jetty-project down the roa
 TODO
 ----------------
 
+- [ ] update to 9.0.1 release when in maven central (currently using staged release)
 - [ ] validate on non-alpha CFM setup once released
 - [ ] Look into pulling jetty.sh changes into jetty proper to remove extra file under resources
 - [ ] perhaps expose jetty.port from VCAP_APP_PORT to jetty.sh differently
