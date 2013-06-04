@@ -8,8 +8,8 @@ module LanguagePack
 
 #    JETTY_VERSION = "9.0.0.v20130308".freeze
     JETTY_VERSION = "9.0.1.v20130408".freeze
-#    JETTY_DOWNLOAD = "http://repo2.maven.org/maven2/org/eclipse/jetty/jetty-distribution/#{JETTY_VERSION}/"
-    JETTY_DOWNLOAD = "https://oss.sonatype.org/content/repositories/jetty-547/org/eclipse/jetty/jetty-distribution/#{JETTY_VERSION}/".freeze
+    JETTY_DOWNLOAD = "http://repo2.maven.org/maven2/org/eclipse/jetty/jetty-distribution/#{JETTY_VERSION}/"
+#    JETTY_DOWNLOAD = "https://oss.sonatype.org/content/repositories/jetty-547/org/eclipse/jetty/jetty-distribution/#{JETTY_VERSION}/".freeze
     JETTY_PACKAGE =  "jetty-distribution-#{JETTY_VERSION}.tar.gz".freeze
     WEBAPP_DIR = "webapps/ROOT/".freeze
 
