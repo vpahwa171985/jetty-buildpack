@@ -46,7 +46,7 @@ done
 ### JavaWeb
 for dir in "${BUILD_DIR}/${WEBAPP_DIR}/${JAVA_WEB_DIR}" "${BUILD_DIR}/${JAVA_WEB_DIR}"; do
   if [ -f "$dir/web.xml" ]; then
-     echo "Jetty Web"
+     echo "Java Web"
      exit 0
   fi
 done
