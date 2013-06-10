@@ -1,10 +1,12 @@
 require "language_pack/java"
+require "language_pack/database_helpers"
 require "fileutils"
 
 # TODO logging
 module LanguagePack
   class JettyWeb < Java
     include LanguagePack::PackageFetcher
+    include LanguagePack::DatabaseHelpers
 
 #    JETTY_VERSION = "9.0.0.v20130308".freeze
     JETTY_VERSION = "9.0.1.v20130408".freeze
@@ -18,7 +20,7 @@ module LanguagePack
     end
 
     def name
-      "Java Web"
+      "Java Web (Jetty)"
     end
 
     def compile
@@ -28,6 +30,7 @@ module LanguagePack
         remove_jetty_files
         copy_webapp_to_jetty
         move_jetty_to_root
+        install_database_drivers
         copy_resources
         setup_profiled
       end
