@@ -20,7 +20,7 @@ module LanguagePack
     end
 
     def name
-      "Java Web (Jetty)"
+      "Java Web"
     end
 
     def compile
