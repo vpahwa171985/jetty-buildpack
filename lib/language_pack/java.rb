@@ -78,6 +78,7 @@ module LanguagePack
     end
 
     def release
+      puts "in java.release"
       {
           "addons" => [],
           "config_vars" => {},
@@ -86,6 +87,7 @@ module LanguagePack
     end
 
     def default_process_types
+      puts "wrongly in default_process_types"
       {}
     end
 
