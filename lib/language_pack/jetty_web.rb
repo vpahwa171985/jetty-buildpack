@@ -83,7 +83,7 @@ module LanguagePack
     end
 
     def java_opts
-      opts = super.merge({ "-Djetty.port=" => "$VCAP_APP_PORT" })
+      opts = super.merge({ "-Djetty.port=" => "$PORT" })
       opts.delete("-Djava.io.tmpdir=")
       opts
     end
