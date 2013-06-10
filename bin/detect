@@ -49,7 +49,7 @@ done
 for dir in "${BUILD_DIR}/${WEBAPP_DIR}/${JAVA_WEB_DIR}" "${BUILD_DIR}/${JAVA_WEB_DIR}"; do
   if [ -f "$dir/web.xml" ]; then
      echo "Java Web"
-     echo "Java Web" >> ${BUILD_DIR}/foo.txt
+     #echo "Java Web" >> ${BUILD_DIR}/foo.txt
      exit 0
   fi
 done
@@ -58,7 +58,7 @@ done
 ### Java
 if [ -n "$(find $BUILD_DIR -name '*.jar' -o -name '*.class')" ]; then
    echo "Java"
-   echo "Java" >> ${BUILD_DIR}/foo.txt
+   #echo "Java" >> ${BUILD_DIR}/foo.txt
    exit 0
 fi
 
