@@ -8,8 +8,6 @@ GRAILS_WEB_DIR="WEB-INF/lib/grails-web"
 WEBAPP_DIR="webapps/ROOT"
 
 
-#echo "$BUILD_DIR" >> logs/foo.log
-
 ### Play
 if [ -n "$(find $BUILD_DIR -name 'play.*.jar')" ]; then
    echo "Play"
@@ -49,7 +47,6 @@ done
 for dir in "${BUILD_DIR}/${WEBAPP_DIR}/${JAVA_WEB_DIR}" "${BUILD_DIR}/${JAVA_WEB_DIR}"; do
   if [ -f "$dir/web.xml" ]; then
      echo "Java Web"
-     #echo "Java Web" >> logs/foo.log
      exit 0
   fi
 done
@@ -58,7 +55,6 @@ done
 ### Java
 if [ -n "$(find $BUILD_DIR -name '*.jar' -o -name '*.class')" ]; then
    echo "Java"
-   #echo "Java" >> logs/foo.log
    exit 0
 fi
 

@@ -86,9 +86,7 @@ module LanguagePack
     end
 
     def default_process_types
-      {
-        "web" => "echo java >> logs/foo.log"
-      }
+      {}
     end
 
     # run a shell comannd and pipe stderr to stdout
