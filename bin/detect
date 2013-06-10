@@ -8,11 +8,9 @@ GRAILS_WEB_DIR="WEB-INF/lib/grails-web"
 WEBAPP_DIR="webapps/ROOT"
 
 
-puts "$BUILD_DIR"
-
 ### Play
 if [ -n "$(find $BUILD_DIR -name 'play.*.jar')" ]; then
-   puts "Play"
+   echo "Play"
    exit 0
 fi
 
@@ -20,7 +18,7 @@ fi
 ### Grails
 for dir in "${BUILD_DIR}/${WEBAPP_DIR}/${GRAILS_WEB_DIR}" "${BUILD_DIR}/${GRAILS_WEB_DIR}"; do
   if [ -d "$dir" ] && [ -n "$(find $dir -name '*.jar' -maxdepth 1)" ]; then
-     puts "Grails"
+     echo "Grails"
      exit 0
   fi
 done
@@ -31,7 +29,7 @@ for dir in "${BUILD_DIR}/${WEBAPP_DIR}/${JAVA_WEB_DIR}" "${BUILD_DIR}/${JAVA_WEB
   [ -d "$dir" ] || continue
 
   if [ -d "$dir/classes/org/springframework" ]; then
-     puts "Spring"
+     echo "Spring"
      exit 0
   fi
 
@@ -39,7 +37,7 @@ for dir in "${BUILD_DIR}/${WEBAPP_DIR}/${JAVA_WEB_DIR}" "${BUILD_DIR}/${JAVA_WEB
 
   if [ -n "$(find "$dir/lib" -maxdepth 1 -name 'spring-core*.jar')" ] || \
       [ -n "$(find "$dir/lib" -maxdepth 1 -name 'org.springframework.core*.jar')" ]; then
-     puts "Spring"
+     echo "Spring"
      exit 0
   fi
 done
@@ -48,7 +46,7 @@ done
 ### JavaWeb
 for dir in "${BUILD_DIR}/${WEBAPP_DIR}/${JAVA_WEB_DIR}" "${BUILD_DIR}/${JAVA_WEB_DIR}"; do
   if [ -f "$dir/web.xml" ]; then
-     puts "Jetty Web"
+     echo "Jetty Web"
      exit 0
   fi
 done
@@ -56,10 +54,10 @@ done
 
 ### Java
 if [ -n "$(find $BUILD_DIR -name '*.jar' -o -name '*.class')" ]; then
-   puts "Java"
+   echo "Java"
    exit 0
 fi
 
 
-puts "no"
+echo "no"
 exit 1

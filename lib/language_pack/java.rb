@@ -86,7 +86,7 @@ module LanguagePack
     end
 
     def default_process_types
-      { "web" => "echo oops" }
+      {}
     end
 
     # run a shell comannd and pipe stderr to stdout
