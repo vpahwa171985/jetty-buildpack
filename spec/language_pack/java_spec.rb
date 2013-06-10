@@ -74,16 +74,14 @@ export PATH="$HOME/.jdk/bin:$PATH"
       script_body = File.read(File.join(tmpdir, ".profile.d", "java.sh"))
       script_body.should include("-Xmx$MEMORY_LIMIT")
       script_body.should include("-Xms$MEMORY_LIMIT")
-      script_body.should include("-Djava.io.tmpdir=$TMPDIR")
-      script_body.should include("-XX:OnOutOfMemoryError='kill -9 %p'")
+      script_body.should include('-Djava.io.tmpdir=\"$TMPDIR\"')
+      script_body.should include('\"echo oome killing pid: %p && kill -9 %p\"')
     end
 
     it "should create a .profile.d with LANG set" do
       java_pack.compile
       script_body = File.read(File.join(tmpdir, ".profile.d", "java.sh"))
-      script_body.should include <<-EXPECTED
-export LANG="${LANG:-en_US.UTF-8}"
-      EXPECTED
+      script_body.should include 'export LANG="${LANG:-en_US.UTF-8}"'
     end
 
     describe "debug mode" do
@@ -98,14 +96,15 @@ export LANG="${LANG:-en_US.UTF-8}"
       context "set to suspend" do
         let(:debug_mode) { "suspend" }
         let(:java_opts) do
-          `export VCAP_DEBUG_PORT=80
+          `export MEMORY_LIMIT=10M
+          export VCAP_DEBUG_PORT=80
           export VCAP_DEBUG_MODE=#{debug_mode}
-          #{File.read(java_script)}
+          . #{java_script}
           echo $JAVA_OPTS`
         end
 
         it "should add debug opts when debug mode is set to suspend" do
-          java_opts.should include (java_pack.debug_suspend_opts.gsub("$VCAP_DEBUG_PORT", "80"))
+          java_opts.should include '-Xdebug -Xrunjdwp:transport=dt_socket,address=80,server=y,suspend=y'
         end
       end
 
@@ -113,21 +112,23 @@ export LANG="${LANG:-en_US.UTF-8}"
       context "set to run" do
         let(:debug_mode) { "run" }
         let(:java_opts) do
-          `export VCAP_DEBUG_PORT=80
+          `export MEMORY_LIMIT=10M
+          export VCAP_DEBUG_PORT=80
           export VCAP_DEBUG_MODE=#{debug_mode}
-          #{File.read(java_script)}
+          . #{java_script}
           echo $JAVA_OPTS`
         end
 
         it "should add debug opts when debug mode is set to run" do
-          java_opts.should include (java_pack.debug_run_opts.gsub("$VCAP_DEBUG_PORT", "80"))
+          java_opts.should include '-Xdebug -Xrunjdwp:transport=dt_socket,address=80,server=y,suspend=n'
         end
       end
 
       context "not set" do
         let(:java_opts) do
-          `#{File.read(java_script)}
-                  echo $JAVA_OPTS`
+          `export MEMORY_LIMIT=10M
+          . #{java_script}
+          echo $JAVA_OPTS`
         end
 
         it "should not add debug opts when debug mode is not set" do

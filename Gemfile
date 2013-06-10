@@ -5,3 +5,5 @@ group :test do
   gem "rspec"
   gem "webmock"
 end
+
+gem "addressable", "~> 2.3.3"
