@@ -86,6 +86,7 @@ module LanguagePack
       opts = super.merge({ "-Djetty.port=" => "$PORT" })
       opts = super.merge({ "-Djetty.home=" => "." })
       opts.delete("-Djava.io.tmpdir=")
+      opts.delete("-XX:OnOutOfMemoryError=")
       opts
     end
 
