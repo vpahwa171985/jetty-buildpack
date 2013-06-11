@@ -6,7 +6,7 @@ require "fileutils"
 module LanguagePack
   class JettyWeb < Java
     include LanguagePack::PackageFetcher
-    include LanguagePack::DatabaseHelpers
+    #include LanguagePack::DatabaseHelpers
 
     JETTY_VERSION = "9.0.3.v20130506".freeze
     JETTY_DOWNLOAD = "http://repo2.maven.org/maven2/org/eclipse/jetty/jetty-distribution/#{JETTY_VERSION}/"
@@ -57,7 +57,7 @@ module LanguagePack
     end
 
     def remove_jetty_files
-      %w[webapps/. start.d/test-webapp.ini].each do |file|
+      %w[webapps/. start.d/900-demo.ini webapps.demo].each do |file|
         #puts "Removing: #{jetty_dir}/#{file}"
         FileUtils.rm_rf("#{jetty_dir}/#{file}")
       end
