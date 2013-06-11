@@ -26,6 +26,7 @@ module LanguagePack
         install_java
         install_jetty
         remove_jetty_files
+        tweak_jetty_port
         copy_webapp_to_jetty
         move_jetty_to_root
         #install_database_drivers
@@ -82,10 +83,14 @@ module LanguagePack
 
     def java_opts
       #opts = super.merge({ "-Djetty.port=" => "$PORT" })
-      opts = super.merge({ "-Djetty.home=" => ".", "jetty.port=" => "$PORT" })
+      opts = super.merge({ "-Djetty.home=" => ".", "-Djetty.port=" => "$PORT" })
       opts.delete("-Djava.io.tmpdir=")
       opts.delete("-XX:OnOutOfMemoryError=")
       opts
+    end
+
+    def tweak_jetty_port
+      run_with_err_output("perl -pi -e 's/jetty.port=8080/jetty.port=$PORT/' #{jetty_dir}/start.ini")
     end
 
     def default_process_types
