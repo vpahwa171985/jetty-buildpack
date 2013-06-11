@@ -391,7 +391,7 @@ then
 fi
 
 #Dirty hack to get port set
-`perl -pi -e 's/jetty.port=8080/jetty.port=$VCAP_APP_PORT/' $JETTY_HOME/start.ini`
+#`perl -pi -e 's/jetty.port=8080/jetty.port=$VCAP_APP_PORT/' $JETTY_HOME/start.ini`
 
 
 #####################################################
