@@ -1,5 +1,5 @@
 require "language_pack/java"
-require "language_pack/database_helpers"
+#require "language_pack/database_helpers"
 require "fileutils"
 
 # TODO logging
@@ -28,7 +28,7 @@ module LanguagePack
         remove_jetty_files
         copy_webapp_to_jetty
         move_jetty_to_root
-        install_database_drivers
+        #install_database_drivers
         copy_resources
         setup_profiled
       end
