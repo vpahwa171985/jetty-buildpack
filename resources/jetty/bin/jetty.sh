@@ -387,7 +387,7 @@ fi
 #####################################################
 if [ "$JAVA_OPTS" ]
 then
-  JAVA_OPTIONS+=("$JAVA_OPTS")
+  JAVA_OPTIONS+=($JAVA_OPTS)
 fi
 
 
