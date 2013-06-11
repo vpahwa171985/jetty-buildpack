@@ -390,6 +390,9 @@ then
   JAVA_OPTIONS+=($JAVA_OPTS)
 fi
 
+#Dirty hack to get port set
+perl -pi -e 's/jetty.port=8080/jetty.port=$PORT/' $JETTY_HOME/start.ini
+
 
 #####################################################
 # Are we running on Windows? Could be, with Cygwin/NT.

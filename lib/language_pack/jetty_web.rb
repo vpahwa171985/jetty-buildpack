@@ -26,7 +26,7 @@ module LanguagePack
         install_java
         install_jetty
         remove_jetty_files
-        tweak_jetty_port
+        #tweak_jetty_port
         copy_webapp_to_jetty
         move_jetty_to_root
         #install_database_drivers
@@ -89,10 +89,10 @@ module LanguagePack
       opts
     end
 
-    def tweak_jetty_port
-      port=ENV['PORT']
-      run_with_err_output("perl -pi -e 's/jetty.port=8080/jetty.port=$port/' #{jetty_dir}/start.ini")
-    end
+    #def tweak_jetty_port
+    #  port=ENV['PORT']
+    #  run_with_err_output("perl -pi -e 's/jetty.port=8080/jetty.port=$port/' #{jetty_dir}/start.ini")
+    #end
 
     def default_process_types
       {
