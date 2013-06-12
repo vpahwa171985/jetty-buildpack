@@ -10,12 +10,12 @@ NOTE:
 
 > This buildpack should work with the Cloudfoundry.com v2 configuration once it is live.
 
+Jetty Version: 9.0.3.v20130506
+
 Description
 ----------------
 
-This buildpack is quite simple to use.  It is currently hard coded to a specific Jetty version of 9.0.3.v20130506 and to
-change that the apparent approach is to simply fork this buildpack and tweak that directly.  To do this simply fork it 
-in GitHub and tweak the JETTY_VERSION string in the jetty_web.rb file.
+This buildpack is quite simple to use.
 
 If you have modifications to make to the Jetty server that will be running, like perhaps configuring additional
 static contexts, setting up a proxy servlet, adding items to the jetty.home/lib/ext directory, you can either adapt
@@ -35,6 +35,7 @@ TODO
 ----------------
 
 - [ ] Look into pulling jetty.sh changes into jetty proper to remove extra file under resources
+- [ ] Update to next jetty release to address tweak in java.rb to get port injected into jetty correctly
 
 Acknowledgements
 ----------------
